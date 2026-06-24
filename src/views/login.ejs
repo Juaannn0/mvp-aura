@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA — Login</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+    <div class="auth-page">
+
+        <p class="auth-page__logo">Aura</p>
+        <p class="auth-page__subtitle">Your personal style, curated daily.</p>
+
+        <form class="auth-form" method="POST" action="/login">
+        <input name="email"    type="email"    placeholder="Email"    required>
+        <input name="password" type="password" placeholder="Password" required>
+        <button class="auth-form__btn" type="submit">Sign in</button>
+        </form>
+
+        <p class="auth-page__link">
+        Don't have an account? <a href="/register">Create one</a>
+        </p>
+
+    </div>
+
+</body>
+</html>

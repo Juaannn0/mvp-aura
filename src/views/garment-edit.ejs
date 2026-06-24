@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA — Edit piece</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+  <main class="app-container">
+    <div class="garment-form-page">
+
+      <a href="/garments" class="garment-form-page__back">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Wardrobe
+      </a>
+
+      <h1 class="garment-form-page__title">Edit piece</h1>
+
+      <form class="garment-form" method="POST" action="/garments/edit/<%= garment.id %>" enctype="multipart/form-data">
+
+        <!-- Imagen actual o upload nuevo -->
+        <div class="form-field">
+          <label>Photo</label>
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" name="image" accept="image/*" id="imageInput">
+
+            <% if (garment.image_path) { %>
+              <img
+                class="upload-preview"
+                id="uploadPreview"
+                src="/<%= garment.image_path %>"
+                alt="<%= garment.name %>"
+                style="display:block;"
+              >
+            <% } else { %>
+              <span class="upload-zone__icon">📷</span>
+              <span class="upload-zone__text">Tap to add a photo</span>
+              <span class="upload-zone__hint">JPG, PNG or WEBP</span>
+              <img class="upload-preview" id="uploadPreview" alt="Preview">
+            <% } %>
+          </div>
+        </div>
+
+        <!-- Nombre -->
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value="<%= garment.name %>"
+            required
+          >
+        </div>
+
+        <!-- Categoría -->
+        <div class="form-field form-field--select">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="" disabled>Select a category</option>
+            <option value="tops"        <%= garment.category === 'tops'        ? 'selected' : '' %>>Tops</option>
+            <option value="bottoms"     <%= garment.category === 'bottoms'     ? 'selected' : '' %>>Bottoms</option>
+            <option value="shoes"       <%= garment.category === 'shoes'       ? 'selected' : '' %>>Shoes</option>
+            <option value="accessories" <%= garment.category === 'accessories' ? 'selected' : '' %>>Accessories</option>
+            <option value="outerwear"   <%= garment.category === 'outerwear'   ? 'selected' : '' %>>Outerwear</option>
+          </select>
+        </div>
+
+        <!-- Color -->
+        <div class="form-field">
+          <label>Color</label>
+          <div class="color-picker-row">
+            <input type="color" name="colorPicker" id="colorPicker" value="<%= garment.color || '#1a1a1a' %>">
+            <input type="text"  name="color"       id="colorText"   value="<%= garment.color || '#1a1a1a' %>" placeholder="#000000">
+          </div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Save changes</button>
+          <a href="/garments" class="btn-ghost">Cancel</a>
+        </div>
+
+      </form>
+
+      <!-- Eliminar (fuera del form de edición) -->
+      <form
+        method="POST"
+        action="/garments/delete/<%= garment.id %>"
+        style="margin-top: 12px; padding-bottom: 40px;"
+        onsubmit="return confirm('Remove <%= garment.name %> from your wardrobe?')"
+      >
+        <button type="submit" class="btn-danger">Remove from wardrobe</button>
+      </form>
+
+    </div>
+  </main>
+
+  <script>
+    const picker = document.getElementById('colorPicker');
+    const text   = document.getElementById('colorText');
+
+    picker.addEventListener('input', () => { text.value = picker.value; });
+    text.addEventListener('input',   () => {
+      if (/^#[0-9A-Fa-f]{6}$/.test(text.value)) picker.value = text.value;
+    });
+
+    const imageInput = document.getElementById('imageInput');
+    const preview    = document.getElementById('uploadPreview');
+    const zone       = document.getElementById('uploadZone');
+
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = 'block';
+      const icon = zone.querySelector('.upload-zone__icon');
+      const txt  = zone.querySelector('.upload-zone__text');
+      const hint = zone.querySelector('.upload-zone__hint');
+      if (icon) icon.style.display = 'none';
+      if (txt)  txt.style.display  = 'none';
+      if (hint) hint.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>

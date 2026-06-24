@@ -1,0 +1,37 @@
+<!-- outfit-grid.ejs (o dentro de tu template) -->
+<div class="outfit-grid">
+
+    <!-- Columna izquierda: prendas principales (span 2 filas) -->
+    <div class="outfit-cell span-rows">
+        <img src="<%= outfit.camiseta.imagen %>" alt="Camiseta">
+        <span><%= outfit.camiseta.nombre %></span>
+    </div>
+
+    <!-- Columna derecha: accesorios (1 celda cada uno) -->
+    <div class="outfit-cell">
+        <img src="<%= outfit.gorra.imagen %>" alt="Gorra">
+        <span><%= outfit.gorra.nombre %></span>
+    </div>
+
+    <div class="outfit-cell">
+        <img src="<%= outfit.gafas.imagen %>" alt="Gafas">
+        <span><%= outfit.gafas.nombre %></span>
+    </div>
+
+    <!-- Segunda prenda principal -->
+    <div class="outfit-cell span-rows">
+        <img src="<%= outfit.pantalon.imagen %>" alt="Pantalón">
+        <span><%= outfit.pantalon.nombre %></span>
+    </div>
+
+    <div class="outfit-cell">
+        <img src="<%= outfit.reloj.imagen %>" alt="Reloj">
+        <span><%= outfit.reloj.nombre %></span>
+    </div>
+
+    <div class="outfit-cell">
+        <img src="<%= outfit.tenis.imagen %>" alt="Tenis">
+        <span><%= outfit.tenis.nombre %></span>
+    </div>
+
+</div>

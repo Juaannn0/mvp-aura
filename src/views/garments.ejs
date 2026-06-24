@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA — Wardrobe</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+    <main class="app-container">
+
+        <div class="wardrobe-header">
+        <h1 class="wardrobe-header__title">Wardrobe</h1>
+        <span class="wardrobe-header__count"><%= garments.length %> pieces</span>
+        </div>
+
+        <div class="wardrobe-filters">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="tops">Tops</button>
+        <button class="filter-chip" data-filter="bottoms">Bottoms</button>
+        <button class="filter-chip" data-filter="shoes">Shoes</button>
+        <button class="filter-chip" data-filter="accessories">Accessories</button>
+        <button class="filter-chip" data-filter="outerwear">Outerwear</button>
+        </div>
+
+        <div class="wardrobe-grid" id="wardrobeGrid">
+
+        <% if (garments.length === 0) { %>
+
+            <div class="wardrobe-empty">
+            <div class="wardrobe-empty__icon">👕</div>
+            <p class="wardrobe-empty__title">Your wardrobe is empty</p>
+            <p class="wardrobe-empty__text">Tap + to add your first piece</p>
+            </div>
+
+        <% } else { %>
+
+            <% garments.forEach(g => { %>
+            <div class="garment-card" data-category="<%= g.category ? g.category.toLowerCase() : 'other' %>">
+
+                <% if (g.image_path) { %>
+                <img class="garment-card__img" src="/<%= g.image_path %>" alt="<%= g.name %>" loading="lazy">
+                <% } else { %>
+                <div class="garment-card__img--placeholder">
+                    <%= g.category === 'tops'        ? '👕' :
+                        g.category === 'bottoms'     ? '👖' :
+                        g.category === 'shoes'       ? '👟' :
+                        g.category === 'accessories' ? '🕶️' :
+                        g.category === 'outerwear'   ? '🧥' : '👔' %>
+                </div>
+                <% } %>
+
+                <div class="garment-card__body">
+                <p class="garment-card__name"><%= g.name %></p>
+                <div class="garment-card__meta">
+                    <span class="garment-card__category"><%= g.category %></span>
+                    <span class="garment-card__color-dot" data-color="<%= g.color || '' %>" title="<%= g.color || 'No color' %>"></span>
+                </div>
+                </div>
+
+                <!-- Botones editar / eliminar -->
+                <div class="garment-card__actions">
+                <a href="/garments/edit/<%= g.id %>" class="garment-card__action-btn">Edit</a>
+
+                <form method="POST" action="/garments/delete/<%= g.id %>" style="flex:1;" onsubmit="return confirm('Remove <%= g.name %>?')">
+                    <button type="submit" class="garment-card__action-btn garment-card__action-btn--danger" style="width:100%;">Remove</button>
+                </form>
+                </div>
+
+            </div>
+            <% }) %>
+
+        <% } %>
+
+        </div>
+
+    </main>
+
+    <%- include('partials/fab') %>
+    <%- include('partials/navbar') %>
+
+    <script>
+        const chips = document.querySelectorAll('.filter-chip');
+        const cards = document.querySelectorAll('.garment-card');
+
+        chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const filter = chip.dataset.filter;
+            cards.forEach(card => {
+            card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
+            });
+        });
+        });
+    </script>
+
+</body>
+</html>

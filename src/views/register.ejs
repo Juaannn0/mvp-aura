@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA — Register</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+    <div class="auth-page">
+
+        <p class="auth-page__logo">Aura</p>
+        <p class="auth-page__subtitle">Join and build your digital wardrobe.</p>
+
+        <form class="auth-form" method="POST" action="/register">
+        <input name="name"     type="text"     placeholder="Name"     required>
+        <input name="email"    type="email"    placeholder="Email"    required>
+        <input name="password" type="password" placeholder="Password" required>
+        <button class="auth-form__btn" type="submit">Create account</button>
+        </form>
+
+        <p class="auth-page__link">
+        Already have an account? <a href="/login">Sign in</a>
+        </p>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+    <main class="app-container">
+
+        <%- include('partials/header') %>
+
+        <section class="outfit-section">
+        <div class="outfit-layout">
+
+            <!-- Prenda 1: Top (ocupa 2 filas) -->
+            <div class="outfit-item">
+            <img src="/images/garments/shirt.png" alt="Shirt">
+            <span class="outfit-item__label">Shirt</span>
+            </div>
+
+            <!-- Prenda 2: Bottom (ocupa 2 filas) -->
+            <div class="outfit-item">
+            <img src="/images/garments/pants.png" alt="Pants">
+            <span class="outfit-item__label">Pants</span>
+            </div>
+
+            <!-- Accesorio 1 -->
+            <div class="outfit-item">
+            <img src="/images/garments/cap.png" alt="Cap">
+            <span class="outfit-item__label">Cap</span>
+            </div>
+
+            <!-- Accesorio 2 -->
+            <div class="outfit-item">
+            <img src="/images/garments/sunglasses.png" alt="Sunglasses">
+            <span class="outfit-item__label">Glasses</span>
+            </div>
+
+            <!-- Accesorio 3 -->
+            <div class="outfit-item">
+            <img src="/images/garments/watch.png" alt="Watch">
+            <span class="outfit-item__label">Watch</span>
+            </div>
+
+            <!-- Accesorio 4 -->
+            <div class="outfit-item">
+            <img src="/images/garments/shoes.png" alt="Shoes">
+            <span class="outfit-item__label">Shoes</span>
+            </div>
+
+        </div>
+        </section>
+
+    </main>
+
+    <%- include('partials/fab') %>
+    <%- include('partials/navbar') %>
+
+</body>
+</html>
