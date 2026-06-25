@@ -25,7 +25,7 @@
         <div class="form-field">
           <label>Photo</label>
           <div class="upload-zone" id="uploadZone">
-            <input type="file" name="image" accept="image/*" id="imageInput">
+            <input type="file" name="image" accept="image/*" capture="environment" id="imageInput">
             <span class="upload-zone__icon">📷</span>
             <span class="upload-zone__text">Tap to add a photo</span>
             <span class="upload-zone__hint">JPG, PNG or WEBP</span>
@@ -78,6 +78,34 @@
     </div>
   </main>
 
+  <script>
+    // Sincronizar color picker ↔ texto
+    const picker = document.getElementById('colorPicker');
+    const text   = document.getElementById('colorText');
+
+    picker.addEventListener('input', () => { text.value = picker.value; });
+    text.addEventListener('input',   () => {
+      if (/^#[0-9A-Fa-f]{6}$/.test(text.value)) picker.value = text.value;
+    });
+
+    // Preview de imagen
+    const imageInput  = document.getElementById('imageInput');
+    const preview     = document.getElementById('uploadPreview');
+    const uploadZone  = document.getElementById('uploadZone');
+
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      preview.src = url;
+      preview.style.display = 'block';
+
+      uploadZone.querySelector('.upload-zone__icon').style.display = 'none';
+      uploadZone.querySelector('.upload-zone__text').style.display = 'none';
+      uploadZone.querySelector('.upload-zone__hint').style.display = 'none';
+    });
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
   <script src="/js/garment-create.js"></script>
 </body>
