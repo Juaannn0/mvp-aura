@@ -1,63 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AURA</title>
-    <link rel="stylesheet" href="/css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA</title>
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
-    <main class="app-container">
+  <main class="app-container">
 
-        <%- include('partials/header') %>
+    <%- include('partials/header') %>
 
-        <section class="outfit-section">
-        <div class="outfit-layout">
+    <div class="generate-bar">
+      <% if (hasGarments) { %>
+        <button class="btn-generate" id="btnGenerate">✦ Generate my Aura</button>
+      <% } else { %>
+        <a href="/garments/create" class="btn-generate btn-generate--empty">+ Add pieces to generate your Aura</a>
+      <% } %>
+    </div>
 
-            <!-- Prenda 1: Top (ocupa 2 filas) -->
-            <div class="outfit-item">
-            <img src="/images/garments/shirt.png" alt="Shirt">
-            <span class="outfit-item__label">Shirt</span>
-            </div>
+    <section class="outfit-section">
+      <div class="outfit-layout" id="outfitGrid">
 
-            <!-- Prenda 2: Bottom (ocupa 2 filas) -->
-            <div class="outfit-item">
-            <img src="/images/garments/pants.png" alt="Pants">
-            <span class="outfit-item__label">Pants</span>
-            </div>
-
-            <!-- Accesorio 1 -->
-            <div class="outfit-item">
-            <img src="/images/garments/cap.png" alt="Cap">
-            <span class="outfit-item__label">Cap</span>
-            </div>
-
-            <!-- Accesorio 2 -->
-            <div class="outfit-item">
-            <img src="/images/garments/sunglasses.png" alt="Sunglasses">
-            <span class="outfit-item__label">Glasses</span>
-            </div>
-
-            <!-- Accesorio 3 -->
-            <div class="outfit-item">
-            <img src="/images/garments/watch.png" alt="Watch">
-            <span class="outfit-item__label">Watch</span>
-            </div>
-
-            <!-- Accesorio 4 -->
-            <div class="outfit-item">
-            <img src="/images/garments/shoes.png" alt="Shoes">
-            <span class="outfit-item__label">Shoes</span>
-            </div>
-
+        <div class="outfit-item" id="slot-top">
+          <% if (autoOutfit.top) { %>
+            <% if (autoOutfit.top.image_path) { %><img src="/<%= autoOutfit.top.image_path %>" alt="<%= autoOutfit.top.name %>"><% } else { %><span class="outfit-item__emoji">👕</span><% } %>
+            <span class="outfit-item__label"><%= autoOutfit.top.name %></span>
+            <button class="outfit-item__change">↺</button>
+          <% } else { %>
+            <button class="outfit-item__add"><span>+</span><span class="outfit-item__add-label">Top</span></button>
+          <% } %>
         </div>
-        </section>
 
-    </main>
+        <div class="outfit-item" id="slot-bottom">
+          <% if (autoOutfit.bottom) { %>
+            <% if (autoOutfit.bottom.image_path) { %><img src="/<%= autoOutfit.bottom.image_path %>" alt="<%= autoOutfit.bottom.name %>"><% } else { %><span class="outfit-item__emoji">👖</span><% } %>
+            <span class="outfit-item__label"><%= autoOutfit.bottom.name %></span>
+            <button class="outfit-item__change">↺</button>
+          <% } else { %>
+            <button class="outfit-item__add"><span>+</span><span class="outfit-item__add-label">Bottom</span></button>
+          <% } %>
+        </div>
 
-    <%- include('partials/fab') %>
-    <%- include('partials/navbar') %>
+        <div class="outfit-item" id="slot-acc1">
+          <% if (autoOutfit.acc1) { %>
+            <% if (autoOutfit.acc1.image_path) { %><img src="/<%= autoOutfit.acc1.image_path %>" alt="<%= autoOutfit.acc1.name %>"><% } else { %><span class="outfit-item__emoji">🕶️</span><% } %>
+            <span class="outfit-item__label"><%= autoOutfit.acc1.name %></span>
+            <button class="outfit-item__change">↺</button>
+          <% } else { %>
+            <button class="outfit-item__add"><span>+</span><span class="outfit-item__add-label">Accessory</span></button>
+          <% } %>
+        </div>
+
+        <div class="outfit-item" id="slot-acc2">
+          <% if (autoOutfit.acc2) { %>
+            <% if (autoOutfit.acc2.image_path) { %><img src="/<%= autoOutfit.acc2.image_path %>" alt="<%= autoOutfit.acc2.name %>"><% } else { %><span class="outfit-item__emoji">⌚</span><% } %>
+            <span class="outfit-item__label"><%= autoOutfit.acc2.name %></span>
+            <button class="outfit-item__change">↺</button>
+          <% } else { %>
+            <button class="outfit-item__add"><span>+</span><span class="outfit-item__add-label">Accessory</span></button>
+          <% } %>
+        </div>
+
+        <div class="outfit-item" id="slot-shoes">
+          <% if (autoOutfit.shoes) { %>
+            <% if (autoOutfit.shoes.image_path) { %><img src="/<%= autoOutfit.shoes.image_path %>" alt="<%= autoOutfit.shoes.name %>"><% } else { %><span class="outfit-item__emoji">👟</span><% } %>
+            <span class="outfit-item__label"><%= autoOutfit.shoes.name %></span>
+            <button class="outfit-item__change">↺</button>
+          <% } else { %>
+            <button class="outfit-item__add"><span>+</span><span class="outfit-item__add-label">Shoes</span></button>
+          <% } %>
+        </div>
+
+        <div class="outfit-item" id="slot-extra">
+          <% if (autoOutfit.extra) { %>
+            <% if (autoOutfit.extra.image_path) { %><img src="/<%= autoOutfit.extra.image_path %>" alt="<%= autoOutfit.extra.name %>"><% } else { %><span class="outfit-item__emoji">🧥</span><% } %>
+            <span class="outfit-item__label"><%= autoOutfit.extra.name %></span>
+            <button class="outfit-item__change">↺</button>
+          <% } else { %>
+            <button class="outfit-item__add"><span>+</span><span class="outfit-item__add-label">Outerwear</span></button>
+          <% } %>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div class="picker-overlay" id="pickerOverlay" onclick="closePicker()">
+    <div class="picker-modal" onclick="event.stopPropagation()">
+      <div class="picker-modal__header">
+        <p class="picker-modal__title" id="pickerTitle">Select a piece</p>
+        <button class="picker-modal__close" onclick="closePicker()">✕</button>
+      </div>
+      <div class="picker-modal__grid" id="pickerGrid"></div>
+    </div>
+  </div>
+
+  <%- include('partials/fab') %>
+  <%- include('partials/navbar') %>
+
+  <script id="wardrobe-data" type="application/json">
+    <%- JSON.stringify({
+      tops: wardrobe.tops,
+      bottoms: wardrobe.bottoms,
+      shoes: wardrobe.shoes,
+      accessories: wardrobe.accessories,
+      outerwear: wardrobe.outerwear
+    }) %>
+  </script>
+
+  <script id="outfit-data" type="application/json">
+    <%- JSON.stringify({
+      top: autoOutfit.top,
+      bottom: autoOutfit.bottom,
+      shoes: autoOutfit.shoes,
+      acc1: autoOutfit.acc1,
+      acc2: autoOutfit.acc2,
+      extra: autoOutfit.extra
+    }) %>
+  </script>
+
+  <script>
+    var wardrobe = JSON.parse(document.getElementById('wardrobe-data').textContent);
+    var outfit = JSON.parse(document.getElementById('outfit-data').textContent);
+    console.log('WARDROBE:', wardrobe);
+    console.log('OUTFIT:', outfit);
+
+    var slotMap     = { top:'slot-top', bottom:'slot-bottom', shoes:'slot-shoes', acc1:'slot-acc1', acc2:'slot-acc2', extra:'slot-extra' };
+    var emojiMap    = { tops:'👕', bottoms:'👖', shoes:'👟', accessories:'🕶️', outerwear:'🧥' };
+    var labelMap    = { tops:'Top', bottoms:'Bottom', shoes:'Shoes', accessories:'Accessory', outerwear:'Outerwear' };
+    var categoryMap = { top:'tops', bottom:'bottoms', shoes:'shoes', acc1:'accessories', acc2:'accessories', extra:'outerwear' };
+
+    function random(arr) {
+      return arr && arr.length ? arr[Math.floor(Math.random() * arr.length)] : null;
+    }
+
+    function renderSlot(key, garment) {
+      var slot     = document.getElementById(slotMap[key]);
+      var category = categoryMap[key];
+      var emoji    = emojiMap[category];
+      var label    = labelMap[category];
+      if (!slot) return;
+
+      slot.innerHTML = '';
+
+      if (garment) {
+        if (garment.image_path) {
+          var img = document.createElement('img');
+          img.src = '/' + garment.image_path;
+          img.alt = garment.name;
+          slot.appendChild(img);
+        } else {
+          var em = document.createElement('span');
+          em.className = 'outfit-item__emoji';
+          em.textContent = emoji;
+          slot.appendChild(em);
+        }
+
+        var lbl = document.createElement('span');
+        lbl.className = 'outfit-item__label';
+        lbl.textContent = garment.name;
+        slot.appendChild(lbl);
+
+        var btn = document.createElement('button');
+        btn.className = 'outfit-item__change';
+        btn.textContent = '↺';
+        btn.addEventListener('click', (function(k, cat) {
+          return function(e) {
+            e.stopPropagation();
+            openPicker(k, cat);
+          };
+        })(key, category));
+        slot.appendChild(btn);
+
+      } else {
+        var addBtn = document.createElement('button');
+        addBtn.className = 'outfit-item__add';
+        addBtn.innerHTML = '<span>+</span><span class="outfit-item__add-label">' + label + '</span>';
+        addBtn.addEventListener('click', (function(k, cat) {
+          return function() { openPicker(k, cat); };
+        })(key, category));
+        slot.appendChild(addBtn);
+      }
+    }
+
+    function initSlots() {
+      Object.keys(slotMap).forEach(function(key) {
+        var slot     = document.getElementById(slotMap[key]);
+        var category = categoryMap[key];
+        if (!slot) return;
+
+        var changeBtn = slot.querySelector('.outfit-item__change');
+        if (changeBtn) {
+          changeBtn.addEventListener('click', (function(k, cat) {
+            return function(e) {
+              e.stopPropagation();
+              openPicker(k, cat);
+            };
+          })(key, category));
+        }
+
+        var addBtn = slot.querySelector('.outfit-item__add');
+        if (addBtn) {
+          addBtn.addEventListener('click', (function(k, cat) {
+            return function() { openPicker(k, cat); };
+          })(key, category));
+        }
+      });
+    }
+
+    function pickDifferent(arr, current) {
+      if (!arr || arr.length === 0) return null;
+      if (arr.length === 1) return arr[0];
+      var pick, attempts = 0;
+      do {
+        pick = random(arr);
+        attempts++;
+      } while (pick && current && pick.id === current.id && attempts < 10);
+      return pick;
+    }
+
+    var btnGenerate = document.getElementById('btnGenerate');
+    if (btnGenerate) {
+      console.log('Generate button found:', btnGenerate);
+      btnGenerate.addEventListener('click', function() {
+        console.log('GENERATE CLICKED');
+        
+        outfit.top    = pickDifferent(wardrobe.tops,        outfit.top);
+        outfit.bottom = pickDifferent(wardrobe.bottoms,     outfit.bottom);
+        outfit.shoes  = pickDifferent(wardrobe.shoes,       outfit.shoes);
+        outfit.acc1   = pickDifferent(wardrobe.accessories, outfit.acc1);
+        outfit.acc2   = pickDifferent(wardrobe.accessories, outfit.acc2);
+        outfit.extra  = pickDifferent(wardrobe.outerwear,   outfit.extra);
+
+        Object.keys(slotMap).forEach(function(key) {
+          renderSlot(key, outfit[key]);
+        });
+      });
+    }
+
+    var currentSlot = null;
+    var currentCategory = null;
+    var pickerItems = [];
+
+    function openPicker(slot, category) {
+      currentSlot     = slot;
+      currentCategory = category;
+      var items = wardrobe[category] || [];
+      var grid  = document.getElementById('pickerGrid');
+
+      document.getElementById('pickerTitle').textContent = 'Select a ' + (labelMap[category] || category);
+
+      if (items.length === 0) {
+        grid.innerHTML = '<div class="picker-empty"><p>No ' + category + ' in your wardrobe yet.</p><a href="/garments/create" class="btn-primary" style="margin-top:12px;display:inline-block;padding:10px 20px;">Add one</a></div>';
+      } else {
+        pickerItems = items;
+
+        grid.innerHTML = items.map(function(g, index) {
+
+          return `
+            <div class="picker-item" onclick="selectGarment(${index})">
+
+              ${
+                g.image_path
+                  ? `<img src="/${g.image_path}" alt="${g.name}">`
+                  : `<div class="picker-item__placeholder">${emojiMap[category] || '👕'}</div>`
+              }
+
+              <span class="picker-item__name">
+                ${g.name}
+              </span>
+
+            </div>
+          `;
+
+        }).join('');
+      }
+
+      document.getElementById('pickerOverlay').classList.add('active');
+    }
+
+    function selectGarment(index) {
+    console.log('SELECT GARMENT', index);
+    var garment = pickerItems[index];
+    if (!garment) return;
+
+    outfit[currentSlot] = garment;
+    renderSlot(currentSlot, garment);
+    closePicker();
+  }
+
+    function closePicker() {
+      document.getElementById('pickerOverlay').classList.remove('active');
+    }
+
+    initSlots();
+  </script>
 
 </body>
 </html>

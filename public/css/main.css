@@ -452,6 +452,7 @@ WARDROBE — Armario digital
     background: #ccc;
 }
 
+/* ─── Botón eliminar (sobre la card) ─── */
 .garment-card__delete {
     position: absolute;
     top: 8px;
@@ -783,4 +784,252 @@ WARDROBE — Armario digital
 .garment-card__action-btn--danger:hover {
     border-color: #c0392b;
     color: #e74c3c;
+}
+
+/* ─────────────────────────────────────────
+DASHBOARD — Generate + Slots + Picker
+───────────────────────────────────────── */
+
+/* ─── Botón generar ─── */
+.generate-bar {
+    padding: 0 16px 16px;
+}
+
+.btn-generate {
+    width: 100%;
+    background: var(--cream);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 14px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    display: block;
+    text-align: center;
+}
+
+.btn-generate:hover  { background: var(--white); }
+.btn-generate:active { transform: scale(0.98); }
+
+.btn-generate--empty {
+    background: transparent;
+    border: 0.5px dashed var(--border-hover);
+    color: var(--muted);
+}
+
+.btn-generate--empty:hover {
+    border-color: var(--cream-muted);
+    color: var(--cream-muted);
+    background: transparent;
+}
+
+/* ─── Slots del outfit ─── */
+.outfit-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.outfit-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+}
+
+.outfit-item__emoji {
+    font-size: 28px;
+    opacity: 0.4;
+}
+
+.outfit-item__label {
+    position: absolute;
+    bottom: 8px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--cream-muted);
+    background: linear-gradient(transparent, rgba(15,15,15,0.8));
+    padding: 12px 4px 6px;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.outfit-item__change {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 26px; height: 26px;
+    background: rgba(15,15,15,0.7);
+    border: 0.5px solid var(--border);
+    border-radius: 50%;
+    color: var(--cream-muted);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+.outfit-item:hover .outfit-item__change { opacity: 1; }
+
+/* ─── Slot vacío ─── */
+.outfit-item__add {
+    width: 100%; height: 100%;
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: color 0.15s;
+}
+
+.outfit-item__add:hover { color: var(--cream-muted); }
+
+.outfit-item__add span:first-child {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.outfit-item__add-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+    /* ─── Modal picker ─── */
+.picker-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    backdrop-filter: blur(4px);
+}
+
+.picker-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.picker-modal {
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    max-height: 65vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.2s;
+}
+
+.picker-overlay.active .picker-modal { transform: translateY(0); }
+
+.picker-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 12px;
+    border-bottom: 0.5px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg-surface);
+}
+
+.picker-modal__title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--cream-muted);
+}
+
+.picker-modal__close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.15s;
+}
+
+.picker-modal__close:hover { color: var(--white); }
+
+.picker-modal__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    padding: 16px;
+}
+
+.picker-item {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.picker-item:hover { border-color: var(--cream-muted); }
+
+.picker-item img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.picker-item__placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background: var(--bg-surface);
+}
+
+.picker-item__name {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    padding: 6px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.picker-empty {
+    grid-column: span 3;
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--muted);
+    font-size: 13px;
 }

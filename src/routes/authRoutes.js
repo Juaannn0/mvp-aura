@@ -11,5 +11,6 @@ router.get("/dashboard", auth.dashboard);
 // acciones
 router.post("/register", auth.register);
 router.post("/login", auth.login);
+router.post("/outfit/save", auth, authController.saveOutfit);
 
 module.exports = router;
