@@ -75,11 +75,11 @@
 
         <div class="outfit-item" id="slot-extra">
           <% if (autoOutfit.extra) { %>
-            <% if (autoOutfit.extra.image_path) { %><img src="/<%= autoOutfit.extra.image_path %>" alt="<%= autoOutfit.extra.name %>"><% } else { %><span class="outfit-item__emoji">🧥</span><% } %>
+            <% if (autoOutfit.extra.image_path) { %><img src="/<%= autoOutfit.extra.image_path %>" alt="<%= autoOutfit.extra.name %>"><% } else { %><span class="outfit-item__emoji"></span><% } %>
             <span class="outfit-item__label"><%= autoOutfit.extra.name %></span>
             <button class="outfit-item__change">↺</button>
           <% } else { %>
-            <button class="outfit-item__add"><span>+</span><span class="outfit-item__add-label">Outerwear</span></button>
+            <button class="outfit-item__add"><span>+</span><span class="outfit-item__add-label">T-Shirt</span></button>
           <% } %>
         </div>
 
@@ -129,9 +129,9 @@
     console.log('OUTFIT:', outfit);
 
     var slotMap     = { top:'slot-top', bottom:'slot-bottom', shoes:'slot-shoes', acc1:'slot-acc1', acc2:'slot-acc2', extra:'slot-extra' };
-    var emojiMap    = { tops:'👕', bottoms:'👖', shoes:'👟', accessories:'🕶️', outerwear:'🧥' };
-    var labelMap    = { tops:'Top', bottoms:'Bottom', shoes:'Shoes', accessories:'Accessory', outerwear:'Outerwear' };
-    var categoryMap = { top:'tops', bottom:'bottoms', shoes:'shoes', acc1:'accessories', acc2:'accessories', extra:'outerwear' };
+    var emojiMap    = { tops:'👕', bottoms:'👖', shoes:'👟', accessories:'🕶️', tshirts:'👕' };
+    var labelMap    = { tops:'Top', bottoms:'Bottom', shoes:'Shoes', accessories:'Accessory', tshirts:'T-shirt' };
+    var categoryMap = { top:'tops', bottom:'bottoms', shoes:'shoes', acc1:'accessories', acc2:'accessories', extra:'tshirts' };
 
     function random(arr) {
       return arr && arr.length ? arr[Math.floor(Math.random() * arr.length)] : null;
@@ -238,6 +238,7 @@
         Object.keys(slotMap).forEach(function(key) {
           renderSlot(key, outfit[key]);
         });
+        saveOutfit();
       });
     }
 
@@ -290,13 +291,23 @@
     outfit[currentSlot] = garment;
     renderSlot(currentSlot, garment);
     closePicker();
+    saveOutfit();
   }
 
     function closePicker() {
       document.getElementById('pickerOverlay').classList.remove('active');
     }
 
+    function saveOutfit() {
+      fetch('/outfit/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ outfit: outfit })
+      });
+    }
+
     initSlots();
+    saveOutfit();
   </script>
 
 </body>

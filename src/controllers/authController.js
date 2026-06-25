@@ -50,26 +50,37 @@ exports.dashboard = (req, res) => {
             bottoms:     garments.filter(g => g.category === "bottoms"),
             shoes:       garments.filter(g => g.category === "shoes"),
             accessories: garments.filter(g => g.category === "accessories"),
-            outerwear:   garments.filter(g => g.category === "outerwear"),
+            tshirts:   garments.filter(g => g.category === "tshirts"),
         };
 
         // Outfit aleatorio si hay prendas suficientes
         const random = arr => arr.length ? arr[Math.floor(Math.random() * arr.length)] : null;
 
-        const autoOutfit = {
+        // Usar outfit guardado en sesión, o generar uno nuevo
+        const autoOutfit = req.session.outfit || {
             top: random(wardrobe.tops),
             bottom: random(wardrobe.bottoms),
             shoes: random(wardrobe.shoes),
             acc1: random(wardrobe.accessories),
             acc2: random(wardrobe.accessories),
-            extra: random(wardrobe.outerwear)
+            extra: random(wardrobe.tshirts)
         };
 
+        // Si es nuevo, guardarlo en sesión
+        if (!req.session.outfit) req.session.outfit = autoOutfit;
+
         res.render("dashboard", {
-            user:      req.session.user,
+            user: req.session.user,
             wardrobe,
             autoOutfit,
             hasGarments: garments.length > 0,
         });
     });
+};
+
+// Save Outfit in session
+exports.saveOutfit = (req, res) => {
+    if (!req.session.user) return res.status(401).json({ ok: false });
+    req.session.outfit = req.body.outfit;
+    res.json({ ok: true });
 };
