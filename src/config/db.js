@@ -20,6 +20,15 @@ db.exec(schema, (err) => {
         console.error("Error creando tablas:", err.message);
     } else {
         console.log("Base de datos inicializada correctamente");
+        db.all("PRAGMA table_info(users)", (err, rows) => {
+            if (err) return;
+            const hasOnboarding = rows.some((row) => row.name === "completed_onboarding");
+            if (!hasOnboarding) {
+                db.run("ALTER TABLE users ADD COLUMN completed_onboarding INTEGER DEFAULT 0", (err) => {
+                    if (err) console.error("Error actualizando tabla users:", err.message);
+                });
+            }
+        });
     }
 });
 

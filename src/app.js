@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const session = require("express-session");
 
@@ -15,7 +17,7 @@ app.set("views", "./src/views");
 
 // sesiones
 app.use(session({
-    secret: "aura-secret",
+    secret: process.env.SESSION_SECRET || "aura-secret",
     resave: false,
     saveUninitialized: false
 }));
@@ -23,10 +25,6 @@ app.use(session({
 // rutas
 app.use("/", authRoutes);
 app.use("/garments", garmentRoutes);
-
-app.get("/", (req, res) => {
-    res.redirect("/login");
-});
 
 const PORT = process.env.PORT || 3000;
 

@@ -3,7 +3,7 @@
     Paleta: negro profundo + crema + arena
     ───────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
 
 :root {
     --bg:           #0f0f0f;
@@ -18,7 +18,7 @@
     --muted:        #5a5a5a;
 
     --font-display: 'Playfair Display', serif;
-    --font-body:    'Inter', sans-serif;
+    --font-body:    'Manrope', 'Inter', sans-serif;
 
     --radius-sm:    8px;
     --radius-md:    14px;
@@ -49,6 +49,245 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     margin: 0 auto;
     padding-bottom: calc(var(--nav-h) + 16px);
     min-height: 100dvh;
+}
+
+.landing-page {
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+}
+
+.landing-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+}
+
+.landing-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 40px;
+}
+
+.landing-brand {
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.landing-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.landing-link,
+.landing-btn {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.landing-link {
+    color: var(--cream-muted);
+}
+
+.landing-link:hover {
+    color: var(--white);
+}
+
+.landing-btn {
+    padding: 14px 22px;
+}
+
+.landing-btn--primary {
+    background: var(--cream);
+    color: var(--bg);
+}
+
+.landing-btn--primary:hover {
+    transform: translateY(-1px);
+    background: var(--white);
+}
+
+.landing-btn--secondary {
+    background: transparent;
+    border: 1px solid var(--cream);
+    color: var(--cream);
+}
+
+.landing-btn--secondary:hover {
+    background: rgba(232, 220, 200, 0.12);
+}
+
+.landing-hero {
+    max-width: 640px;
+    padding-bottom: 56px;
+}
+
+.landing-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.05;
+    margin-bottom: 24px;
+    color: var(--white);
+}
+
+.landing-copy {
+    max-width: 560px;
+    color: var(--cream-muted);
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 34px;
+}
+
+.landing-hero__actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.landing-features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    padding-bottom: 56px;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 18px 50px rgba(15, 15, 15, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 58px rgba(15, 15, 15, 0.28);
+}
+
+.feature-card__icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    color: var(--cream);
+}
+
+.feature-card__icon i {
+    width: 28px;
+    height: 28px;
+}
+
+.feature-card h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--white);
+}
+
+.feature-card p {
+    color: var(--cream-muted);
+    line-height: 1.75;
+}
+
+.landing-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: 26px;
+    padding: 34px 36px;
+    margin-bottom: 36px;
+}
+
+.landing-cta h2 {
+    font-size: 24px;
+    margin-bottom: 14px;
+    color: var(--white);
+}
+
+.landing-cta p {
+    color: var(--cream-muted);
+    line-height: 1.8;
+    max-width: 560px;
+}
+
+.landing-cta__button {
+    white-space: nowrap;
+}
+
+.landing-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--cream-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    padding-top: 22px;
+}
+
+.landing-footer p {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .landing-features {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .landing-shell {
+        padding: 24px 18px 32px;
+    }
+
+    .landing-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .landing-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .landing-hero__actions {
+        flex-direction: column;
+    }
+
+    .landing-features {
+        grid-template-columns: 1fr;
+    }
+
+    .landing-cta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 520px) {
+    .landing-title {
+        font-size: 40px;
+    }
+
+    .landing-nav {
+        padding-bottom: 24px;
+    }
 }
 
 /* ─── Header ─── */
@@ -964,6 +1203,131 @@ DASHBOARD — Generate + Slots + Picker
 
 .picker-overlay.active .picker-modal { transform: translateY(0); }
 
+.onboarding-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(6px);
+}
+
+.onboarding-overlay.active {
+    display: flex;
+}
+
+.onboarding-modal {
+    width: min(480px, 100%);
+    background: rgba(15, 15, 15, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+    animation: fadeInUp 0.24s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.onboarding-stepper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.onboarding-step {
+    background: rgba(255,255,255,0.06);
+    color: var(--cream-muted);
+    height: 10px;
+    border-radius: 999px;
+    transition: background 0.18s ease;
+}
+
+.onboarding-step--active {
+    background: var(--cream);
+}
+
+.onboarding-content {
+    min-height: 240px;
+    display: grid;
+    position: relative;
+}
+
+.onboarding-card {
+    display: none;
+    gap: 18px;
+    text-align: center;
+    align-items: center;
+}
+
+.onboarding-card--active {
+    display: grid;
+}
+
+.onboarding-card i {
+    color: var(--cream);
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+}
+
+.onboarding-card h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    margin: 0;
+    color: var(--white);
+}
+
+.onboarding-card p {
+    color: var(--cream-muted);
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.onboarding-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-secondary {
+    padding: 12px 18px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: transparent;
+    color: var(--white);
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.06);
+}
+
+.btn-primary {
+    padding: 12px 18px;
+    background: var(--cream);
+    color: var(--bg);
+    border: none;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+}
+
 .picker-modal__header {
     display: flex;
     align-items: center;
@@ -994,6 +1358,93 @@ DASHBOARD — Generate + Slots + Picker
 }
 
 .picker-modal__close:hover { color: var(--white); }
+
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.74);
+    backdrop-filter: blur(14px);
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.24s ease, visibility 0.24s ease;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.loading-overlay__panel {
+    width: min(520px, 100%);
+    background: rgba(15, 15, 15, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    text-align: center;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+}
+
+.loading-overlay__spinner {
+    width: 52px;
+    height: 52px;
+    border: 5px solid rgba(255,255,255,0.12);
+    border-top-color: var(--cream);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-overlay__title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 12px;
+}
+
+.loading-overlay__copy {
+    color: var(--cream-muted);
+    line-height: 1.75;
+    margin-bottom: 24px;
+}
+
+.loading-overlay__progress-bar {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0 auto 14px;
+}
+
+.loading-overlay__progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--cream), rgba(255,255,255,0.8));
+    border-radius: 999px;
+    transition: width 0.35s ease;
+}
+
+.loading-overlay__message {
+    color: var(--cream-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.loading-overlay.active ~ * {
+    pointer-events: none;
+}
 
 .picker-modal__grid {
     display: grid;

@@ -25,6 +25,16 @@ class User {
             callback(err, row);
         });
     }
+
+    static completeOnboarding(userId, callback) {
+        const sql = `
+            UPDATE users SET completed_onboarding = 1 WHERE id = ?
+        `;
+
+        db.run(sql, [userId], function(err) {
+            callback(err, this?.changes);
+        });
+    }
 }
 
 module.exports = User;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AURA — Wardrobe</title>
+    <title>AURA — Guardarropa</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -11,17 +11,17 @@
     <main class="app-container">
 
         <div class="wardrobe-header">
-        <h1 class="wardrobe-header__title">Wardrobe</h1>
-        <span class="wardrobe-header__count"><%= garments.length %> pieces</span>
+        <h1 class="wardrobe-header__title">Guardarropa</h1>
+        <span class="wardrobe-header__count"><%= garments.length %> prendas</span>
         </div>
 
         <div class="wardrobe-filters">
-        <button class="filter-chip active" data-filter="all">All</button>
-        <button class="filter-chip" data-filter="tops">Tops</button>
-        <button class="filter-chip" data-filter="bottoms">Bottoms</button>
-        <button class="filter-chip" data-filter="shoes">Shoes</button>
-        <button class="filter-chip" data-filter="accessories">Accessories</button>
-        <button class="filter-chip" data-filter="thsi">Outerwear</button>
+        <button class="filter-chip active" data-filter="all">Todas</button>
+        <button class="filter-chip" data-filter="tops">Parte superior</button>
+        <button class="filter-chip" data-filter="bottoms">Parte inferior</button>
+        <button class="filter-chip" data-filter="shoes">Zapatos</button>
+        <button class="filter-chip" data-filter="accessories">Accesorios</button>
+        <button class="filter-chip" data-filter="tshirts">Camisetas</button>
         </div>
 
         <div class="wardrobe-grid" id="wardrobeGrid">
@@ -29,9 +29,9 @@
         <% if (garments.length === 0) { %>
 
             <div class="wardrobe-empty">
-            <div class="wardrobe-empty__icon">👕</div>
-            <p class="wardrobe-empty__title">Your wardrobe is empty</p>
-            <p class="wardrobe-empty__text">Tap + to add your first piece</p>
+            <div class="wardrobe-empty__icon"><i data-lucide="tshirt"></i></div>
+            <p class="wardrobe-empty__title">Tu guardarropa está vacío</p>
+            <p class="wardrobe-empty__text">Toca + para agregar tu primera prenda</p>
             </div>
 
         <% } else { %>
@@ -43,11 +43,12 @@
                 <img class="garment-card__img" src="/<%= g.image_path %>" alt="<%= g.name %>" loading="lazy">
                 <% } else { %>
                 <div class="garment-card__img--placeholder">
-                    <%= g.category === 'tops'        ? '👕' :
-                        g.category === 'bottoms'     ? '👖' :
-                        g.category === 'shoes'       ? '👟' :
-                        g.category === 'accessories' ? '🕶️' :
-                        g.category === 'outerwear'   ? '🧥' : '👔' %>
+                    <% if (g.category === 'tops') { %><i data-lucide="tshirt"></i><% }
+                       else if (g.category === 'bottoms') { %><i data-lucide="layers"></i><% }
+                       else if (g.category === 'shoes') { %><i data-lucide="shoe"></i><% }
+                       else if (g.category === 'accessories') { %><i data-lucide="sun-glasses"></i><% }
+                       else if (g.category === 'outerwear') { %><i data-lucide="jacket"></i><% }
+                       else { %><i data-lucide="tshirt"></i><% } %>
                 </div>
                 <% } %>
 
@@ -61,10 +62,10 @@
 
                 <!-- Botones editar / eliminar -->
                 <div class="garment-card__actions">
-                <a href="/garments/edit/<%= g.id %>" class="garment-card__action-btn">Edit</a>
+                <a href="/garments/edit/<%= g.id %>" class="garment-card__action-btn">Editar</a>
 
-                <form method="POST" action="/garments/delete/<%= g.id %>" style="flex:1;" onsubmit="return confirm('Remove <%= g.name %>?')">
-                    <button type="submit" class="garment-card__action-btn garment-card__action-btn--danger" style="width:100%;">Remove</button>
+                <form method="POST" action="/garments/delete/<%= g.id %>" style="flex:1;" onsubmit="return confirm('¿Eliminar <%= g.name %>?')">
+                    <button type="submit" class="garment-card__action-btn garment-card__action-btn--danger" style="width:100%;">Eliminar</button>
                 </form>
                 </div>
 

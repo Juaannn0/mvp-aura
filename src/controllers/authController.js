@@ -2,6 +2,11 @@ const User    = require("../models/User");
 const Garment = require("../models/Garment");
 const bcrypt  = require("bcrypt");
 
+// vista landing
+exports.landingPage = (req, res) => {
+    res.render("landing");
+};
+
 // vista login
 exports.loginPage = (req, res) => {
     res.render("login");
@@ -74,7 +79,18 @@ exports.dashboard = (req, res) => {
             wardrobe,
             autoOutfit,
             hasGarments: garments.length > 0,
+            showOnboarding: !req.session.user.completed_onboarding,
         });
+    });
+};
+
+exports.completeOnboarding = (req, res) => {
+    if (!req.session.user) return res.status(401).json({ ok: false });
+
+    User.completeOnboarding(req.session.user.id, (err) => {
+        if (err) return res.status(500).json({ ok: false });
+        req.session.user.completed_onboarding = 1;
+        res.json({ ok: true });
     });
 };
 

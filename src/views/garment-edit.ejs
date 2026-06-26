@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA — Edit piece</title>
+  <title>AURA — Editar prenda</title>
   <link rel="stylesheet" href="/css/main.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
@@ -13,16 +14,16 @@
 
       <a href="/garments" class="garment-form-page__back">
         <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        Wardrobe
+        Guardarropa
       </a>
 
-      <h1 class="garment-form-page__title">Edit piece</h1>
+      <h1 class="garment-form-page__title">Editar prenda</h1>
 
       <form class="garment-form" method="POST" action="/garments/edit/<%= garment.id %>" enctype="multipart/form-data">
 
         <!-- Imagen actual o upload nuevo -->
         <div class="form-field">
-          <label>Photo</label>
+          <label>Foto</label>
           <div class="upload-zone" id="uploadZone">
             <input type="file" name="image" accept="image/*" id="imageInput">
 
@@ -35,9 +36,9 @@
                 style="display:block;"
               >
             <% } else { %>
-              <span class="upload-zone__icon">📷</span>
-              <span class="upload-zone__text">Tap to add a photo</span>
-              <span class="upload-zone__hint">JPG, PNG or WEBP</span>
+              <i data-lucide="camera" class="upload-zone__icon"></i>
+              <span class="upload-zone__text">Toca para agregar una foto</span>
+              <span class="upload-zone__hint">JPG, PNG o WEBP</span>
               <img class="upload-preview" id="uploadPreview" alt="Preview">
             <% } %>
           </div>
@@ -45,7 +46,7 @@
 
         <!-- Nombre -->
         <div class="form-field">
-          <label for="name">Name</label>
+          <label for="name">Nombre</label>
           <input
             type="text"
             id="name"
@@ -57,14 +58,14 @@
 
         <!-- Categoría -->
         <div class="form-field form-field--select">
-          <label for="category">Category</label>
+          <label for="category">Categoría</label>
           <select id="category" name="category" required>
-            <option value="" disabled>Select a category</option>
-            <option value="tops"        <%= garment.category === 'tops'        ? 'selected' : '' %>>Tops</option>
-            <option value="bottoms"     <%= garment.category === 'bottoms'     ? 'selected' : '' %>>Bottoms</option>
-            <option value="shoes"       <%= garment.category === 'shoes'       ? 'selected' : '' %>>Shoes</option>
-            <option value="accessories" <%= garment.category === 'accessories' ? 'selected' : '' %>>Accessories</option>
-            <option value="tshirts"   <%= garment.category === 'tshirts'   ? 'selected' : '' %>>T-shirt</option>
+            <option value="" disabled>Selecciona una categoría</option>
+            <option value="tops"        <%= garment.category === 'tops'        ? 'selected' : '' %>>Parte superior</option>
+            <option value="bottoms"     <%= garment.category === 'bottoms'     ? 'selected' : '' %>>Parte inferior</option>
+            <option value="shoes"       <%= garment.category === 'shoes'       ? 'selected' : '' %>>Zapatos</option>
+            <option value="accessories" <%= garment.category === 'accessories' ? 'selected' : '' %>>Accesorios</option>
+            <option value="tshirts"   <%= garment.category === 'tshirts'   ? 'selected' : '' %>>Camiseta</option>
           </select>
         </div>
 
@@ -79,8 +80,8 @@
 
         <!-- Acciones -->
         <div class="form-actions">
-          <button type="submit" class="btn-primary">Save changes</button>
-          <a href="/garments" class="btn-ghost">Cancel</a>
+          <button type="submit" class="btn-primary">Guardar cambios</button>
+          <a href="/garments" class="btn-ghost">Cancelar</a>
         </div>
 
       </form>
@@ -90,9 +91,9 @@
         method="POST"
         action="/garments/delete/<%= garment.id %>"
         style="margin-top: 12px; padding-bottom: 40px;"
-        onsubmit="return confirm('Remove <%= garment.name %> from your wardrobe?')"
+        onsubmit="return confirm('¿Eliminar <%= garment.name %> de tu guardarropa?')"
       >
-        <button type="submit" class="btn-danger">Remove from wardrobe</button>
+        <button type="submit" class="btn-danger">Eliminar del guardarropa</button>
       </form>
 
     </div>
@@ -123,6 +124,8 @@
       if (txt)  txt.style.display  = 'none';
       if (hint) hint.style.display = 'none';
     });
+
+    lucide.createIcons();
   </script>
 
 </body>
