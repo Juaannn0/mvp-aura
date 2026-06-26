@@ -1,3 +1,4 @@
+const fs = require("fs");
 const multer = require("multer");
 const path = require("path");
 
@@ -7,9 +8,14 @@ const imageProcessor = require("../services/imageProcessor");
 // --------------------
 // Multer
 // --------------------
+const UPLOAD_DIR = "public/uploads/garments/temp/";
+if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+}
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "public/uploads/garments/temp/");
+        cb(null, UPLOAD_DIR);
     },
     filename: (req, file, cb) => {
         const unique = Date.now() + "-" + Math.round(Math.random() * 1e6);

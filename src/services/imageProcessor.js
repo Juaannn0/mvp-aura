@@ -60,6 +60,11 @@ exports.process = async (file) => {
 
     console.log("Saving to:", destination);
 
+    const garmentsDir = path.dirname(destination);
+    if (!fs.existsSync(garmentsDir)) {
+        fs.mkdirSync(garmentsDir, { recursive: true });
+    }
+
     fs.writeFileSync(
         destination,
         response.data
