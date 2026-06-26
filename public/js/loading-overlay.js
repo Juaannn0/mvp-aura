@@ -116,13 +116,13 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    showOverlay();
+    event.preventDefault();
 
     var originalAction = form.action;
     var originalMethod = form.method || 'POST';
     var formData = new FormData(form);
 
-    event.preventDefault();
+    showOverlay();
 
     fetch(originalAction, {
       method: originalMethod,
