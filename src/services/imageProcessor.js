@@ -23,7 +23,7 @@ exports.process = async (file) => {
 
     try {
         response = await axios.post(
-            process.env.IMAGE_SERVICE_URL + "/process",
+            process.env.IMAGE_SERVICE_URL.replace(/\/+$/, "") + "/process",
             form,
             {
                 headers: form.getHeaders(),
