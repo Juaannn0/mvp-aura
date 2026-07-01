@@ -324,9 +324,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* ─── Outfit Grid ─── */
 .outfit-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(4, 100px);
-    gap: 8px;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-rows: repeat(4, minmax(104px, 1fr));
+    gap: 0;
+    padding: 10px;
+    border: 1px solid #d8d8d8;
+    border-radius: 26px;
+    background: #ffffff;
+    box-shadow: 0 20px 40px rgba(0,0,0,.05);
 }
 
 #slot-top {
@@ -346,12 +351,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 #slot-extra {
     grid-column: 2;
-    grid-row: 2;
-}
-
-#slot-acc2 {
-    grid-column: 2;
-    grid-row: 3;
+    grid-row: 2 / 4;
 }
 
 #slot-shoes {
@@ -360,38 +360,58 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 .outfit-item {
-    background: var(--bg-card);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
+    background: #fcfcfc;
+    border: 1px dashed #d9d9d9;
+    border-radius: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
     overflow: hidden;
     position: relative;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, transform 0.15s ease;
+    min-height: 0;
+    margin: 4px;
 }
 
 .outfit-item:hover {
-    border-color: var(--border-hover);
+    border-color: #9e9e9e;
+    transform: translateY(-1px);
 }
 
 .outfit-item img {
     object-fit: contain;
-    padding: 12px;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+    padding: 6px;
+}
+
+#slot-top img,
+#slot-bottom img {
+    padding: 10px 10px 18px;
+}
+
+#slot-acc1 img,
+#slot-extra img,
+#slot-shoes img {
+    padding: 8px;
 }
 
 .outfit-item__label {
     position: absolute;
     bottom: 8px;
-    left: 0; right: 0;
+    left: 8px;
+    right: 8px;
     text-align: center;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--cream-muted);
+    color: #7a7a7a;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
 }
 
 /* ─── Placeholder (sin imagen) ─── */
@@ -1048,23 +1068,24 @@ DASHBOARD — Generate + Slots + Picker
 
 .btn-generate {
     width: 100%;
-    background: var(--cream);
+    background: linear-gradient(135deg, #f7f0e3 0%, var(--cream) 100%);
     color: var(--bg);
     border: none;
-    border-radius: var(--radius-sm);
+    border-radius: 999px;
     font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    padding: 14px 18px;
     cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
     display: block;
     text-align: center;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
 }
 
-.btn-generate:hover  { background: var(--white); }
+.btn-generate:hover  { background: linear-gradient(135deg, #fcf7eb 0%, #efe2c8 100%); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
 .btn-generate:active { transform: scale(0.98); }
 
 .btn-generate--empty {
@@ -1086,15 +1107,23 @@ DASHBOARD — Generate + Slots + Picker
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: #fcfcfc;
+    border: 1px dashed #d9d9d9;
+    border-radius: 18px;
+    overflow: hidden;
+    margin: 4px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.03);
 }
 
 .outfit-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
     position: absolute;
     inset: 0;
-    border-radius: var(--radius-md);
+    padding: 10px;
+    border-radius: 18px;
 }
 
 .outfit-item__emoji {
@@ -1105,16 +1134,17 @@ DASHBOARD — Generate + Slots + Picker
 .outfit-item__label {
     position: absolute;
     bottom: 8px;
-    left: 0; right: 0;
+    left: 8px;
+    right: 8px;
     text-align: center;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--cream-muted);
-    background: linear-gradient(transparent, rgba(15,15,15,0.8));
-    padding: 12px 4px 6px;
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    color: #7a7a7a;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
 }
 
 .outfit-item__change {

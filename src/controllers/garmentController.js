@@ -40,14 +40,22 @@ const upload = multer({
 });
 exports.upload = upload.single("image");
 
+const normalizeCategory = (category) => category === "tshirt" ? "tshirts" : category;
+
 // --------------------
 // List
 // --------------------
 exports.list = (req, res) => {
     Garment.getByUser(req.session.user.id, (err, garments) => {
         if (err) return res.status(500).send("Error");
+
+        const normalizedGarments = (garments || []).map((garment) => ({
+            ...garment,
+            category: normalizeCategory(garment.category)
+        }));
+
         res.render("garments", {
-            garments,
+            garments: normalizedGarments,
             user: req.session.user
         });
     });
@@ -72,6 +80,7 @@ exports.create = async (req, res) => {
         console.log("Body:", req.body);
         console.log("File:", req.file);
         const { name, category, color } = req.body;
+        const normalizedCategory = normalizeCategory(category);
         let image_path = null;
 
         if (req.file) {
@@ -91,7 +100,7 @@ exports.create = async (req, res) => {
         Garment.create(
             req.session.user.id,
             name,
-            category,
+            normalizedCategory,
             color,
             image_path,
             (err) => {
@@ -123,8 +132,13 @@ exports.editPage = (req, res) => {
         (err, garment) => {
             if (err || !garment)
                 return res.status(404).send("Prenda no encontrada");
+            const normalizedGarment = {
+                ...garment,
+                category: normalizeCategory(garment.category)
+            };
+
             res.render("garment-edit", {
-                garment,
+                garment: normalizedGarment,
                 user: req.session.user
             });
         }
@@ -137,6 +151,7 @@ exports.editPage = (req, res) => {
 exports.update = async (req, res) => {
     try {
         const { name, category, color } = req.body;
+        const normalizedCategory = normalizeCategory(category);
         let image_path = null;
         if (req.file) {
             try {
@@ -149,7 +164,7 @@ exports.update = async (req, res) => {
             req.params.id,
             req.session.user.id,
             name,
-            category,
+            normalizedCategory,
             color,
             image_path,
             (err) => {

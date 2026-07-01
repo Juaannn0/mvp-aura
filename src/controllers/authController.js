@@ -2,6 +2,8 @@ const User    = require("../models/User");
 const Garment = require("../models/Garment");
 const bcrypt  = require("bcrypt");
 
+const normalizeCategory = (category) => category === "tshirt" ? "tshirts" : category;
+
 // vista landing
 exports.landingPage = (req, res) => {
     res.render("landing");
@@ -47,15 +49,18 @@ exports.dashboard = (req, res) => {
     if (!req.session.user) return res.redirect("/login");
 
     Garment.getByUser(req.session.user.id, (err, garments) => {
-        if (err) garments = [];
+        const normalizedGarments = (garments || []).map((garment) => ({
+            ...garment,
+            category: normalizeCategory(garment.category)
+        }));
 
         // Agrupar por categoría
         const wardrobe = {
-            tops:        garments.filter(g => g.category === "tops"),
-            bottoms:     garments.filter(g => g.category === "bottoms"),
-            shoes:       garments.filter(g => g.category === "shoes"),
-            accessories: garments.filter(g => g.category === "accessories"),
-            tshirts:   garments.filter(g => g.category === "tshirts"),
+            tops:        normalizedGarments.filter(g => g.category === "tops"),
+            bottoms:     normalizedGarments.filter(g => g.category === "bottoms"),
+            shoes:       normalizedGarments.filter(g => g.category === "shoes"),
+            accessories: normalizedGarments.filter(g => g.category === "accessories"),
+            tshirts:     normalizedGarments.filter(g => g.category === "tshirts"),
         };
 
         // Outfit aleatorio si hay prendas suficientes
@@ -78,7 +83,7 @@ exports.dashboard = (req, res) => {
             user: req.session.user,
             wardrobe,
             autoOutfit,
-            hasGarments: garments.length > 0,
+            hasGarments: normalizedGarments.length > 0,
             showOnboarding: !req.session.user.completed_onboarding,
         });
     });
